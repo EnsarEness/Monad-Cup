@@ -1,0 +1,114 @@
+.card {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    text-decoration: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    background: linear-gradient(145deg, rgba(20, 20, 20, 0.6) 0%, rgba(10, 10, 10, 0.8) 100%);
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px rgba(131, 110, 251, 0.15);
+    border-color: rgba(131, 110, 251, 0.4);
+}
+
+.status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+    align-self: flex-start;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 4px 10px;
+    border-radius: 12px;
+}
+
+.liveIndicator {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: var(--neon-green);
+    box-shadow: 0 0 8px var(--neon-green);
+    animation: pulse 1.5s infinite;
+}
+
+.teamsContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.team {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+}
+
+.flagPlaceholder {
+    width: 48px;
+    height: 32px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    border: 1px solid var(--glass-border);
+}
+
+.flag {
+    width: 48px;
+    height: 32px;
+    border-radius: 4px;
+    object-fit: cover;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.teamName {
+    font-weight: 600;
+    font-size: 1.1rem;
+    text-align: center;
+}
+
+.scoreBlock {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 0 24px;
+}
+
+.score {
+    font-family: var(--font-mono);
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #fff;
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+}
+
+.divider {
+    color: var(--text-muted);
+    font-weight: 300;
+    font-size: 1.5rem;
+}
+
+.txInfo {
+    margin-top: 24px;
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding-top: 12px;
+}
+
+.txIcon {
+    font-size: 1rem;
+    filter: drop-shadow(0 0 4px var(--monad-purple));
+}

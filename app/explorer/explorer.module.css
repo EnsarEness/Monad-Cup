@@ -1,0 +1,91 @@
+.container {
+    padding: 24px;
+}
+
+.title {
+    font-family: var(--font-mono);
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+    margin-bottom: 32px;
+}
+
+.tableWrapper {
+    overflow-x: auto;
+    padding: 16px;
+    border-radius: 12px;
+    background: rgba(10, 10, 10, 0.7);
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 0.85rem;
+}
+
+.table th,
+.table td {
+    padding: 14px 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.table th {
+    color: var(--text-muted);
+    font-weight: 600;
+    text-transform: uppercase;
+    font-family: var(--font-mono);
+    letter-spacing: 1px;
+}
+
+.table tbody tr {
+    transition: background 0.2s ease;
+}
+
+.table tbody tr:hover {
+    background: rgba(131, 110, 251, 0.05);
+}
+
+.txHashCell {
+    width: 250px;
+}
+
+.txHash {
+    color: var(--monad-purple);
+    font-family: var(--font-mono);
+    background: rgba(131, 110, 251, 0.1);
+    padding: 4px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+    max-width: 200px;
+}
+
+.matchCell {
+    font-weight: 600;
+    color: var(--text-main);
+    white-space: nowrap;
+}
+
+.minCell {
+    color: var(--neon-green);
+    font-weight: 700;
+}
+
+.eventCell {
+    color: #ddd;
+}
+
+.timeCell {
+    font-family: var(--font-mono);
+    color: var(--text-muted);
+    white-space: nowrap;
+}
+
+.empty {
+    text-align: center;
+    padding: 32px;
+    font-style: italic;
+    color: var(--text-muted);
+}

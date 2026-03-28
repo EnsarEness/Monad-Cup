@@ -1,0 +1,19 @@
+.container {
+    padding: 24px;
+}
+
+.title {
+    font-family: var(--font-mono);
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+    margin-bottom: 32px;
+}
+
+.empty {
+    text-align: center;
+    padding: 64px;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    border: 1px dashed rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+}

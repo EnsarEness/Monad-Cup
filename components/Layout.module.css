@@ -1,0 +1,154 @@
+.container {
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+    background: radial-gradient(circle at 10% 20%, rgba(131, 110, 251, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 90% 80%, rgba(57, 255, 20, 0.05) 0%, transparent 50%);
+}
+
+.sidebar {
+    width: 260px;
+    margin: 16px;
+    display: flex;
+    flex-direction: column;
+    padding: 24px 16px;
+    background: rgba(10, 10, 10, 0.6);
+    border-right: 1px solid var(--glass-border);
+}
+
+.logoContainer {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 40px;
+    padding: 0 8px;
+}
+
+.logoText {
+    font-size: 1.25rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    font-family: var(--font-mono);
+}
+
+.nav {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+}
+
+.navLink {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    border-radius: 8px;
+    color: var(--text-muted);
+    font-weight: 500;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.navLink:hover {
+    background: rgba(131, 110, 251, 0.1);
+    color: var(--text-main);
+    box-shadow: 0 0 15px rgba(131, 110, 251, 0.2);
+}
+
+.navLink:hover::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 60%;
+    width: 3px;
+    background: var(--monad-purple);
+    border-radius: 0 4px 4px 0;
+    box-shadow: 0 0 8px var(--monad-purple);
+}
+
+.systemStatus {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 16px;
+    border-top: 1px solid var(--glass-border);
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--neon-green);
+    text-shadow: 0 0 5px rgba(57, 255, 20, 0.5);
+}
+
+.statusIndicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--neon-green);
+    box-shadow: 0 0 8px var(--neon-green);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 0.5;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0.5;
+    }
+}
+
+.mainContent {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 16px 16px 16px 0;
+    overflow: hidden;
+}
+
+.header {
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+    margin-bottom: 24px;
+    background: rgba(10, 10, 10, 0.6);
+}
+
+.headerTitle {
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    letter-spacing: 2px;
+    color: var(--text-muted);
+}
+
+.networkInfo {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.tps {
+    padding: 4px 12px;
+    border-radius: 12px;
+    background: rgba(131, 110, 251, 0.1);
+    color: var(--monad-purple);
+    border: 1px solid rgba(131, 110, 251, 0.3);
+}
+
+.pageContent {
+    flex: 1;
+    overflow-y: auto;
+    border-radius: 12px;
+    padding-right: 8px;
+}

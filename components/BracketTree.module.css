@@ -1,0 +1,89 @@
+.container {
+    overflow-x: auto;
+    padding: 24px;
+    background: rgba(10, 10, 10, 0.4);
+    border-radius: 12px;
+    border: 1px solid var(--glass-border);
+}
+
+.bracket {
+    display: flex;
+    gap: 48px;
+    min-width: max-content;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 200px;
+}
+
+.roundTitle {
+    font-family: var(--font-mono);
+    color: var(--monad-purple);
+    text-align: center;
+    margin-bottom: 16px;
+    letter-spacing: 2px;
+    border-bottom: 1px solid rgba(131, 110, 251, 0.3);
+    padding-bottom: 8px;
+}
+
+.matchList {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    flex: 1;
+    gap: 16px;
+}
+
+.matchBox {
+    display: flex;
+    flex-direction: column;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 8px 12px;
+    font-size: 0.85rem;
+    position: relative;
+}
+
+/* Connectors */
+.matchBox::after {
+    content: '';
+    position: absolute;
+    right: -24px;
+    top: 50%;
+    width: 24px;
+    height: 2px;
+    background: rgba(131, 110, 251, 0.3);
+}
+
+.column:last-child .matchBox::after {
+    display: none;
+}
+
+.teamRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px 0;
+}
+
+.teamName {
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 130px;
+}
+
+.score {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    color: var(--neon-green);
+}
+
+.divider {
+    height: 1px;
+    background: rgba(255, 255, 255, 0.1);
+    margin: 2px 0;
+}
