@@ -1,36 +1,91 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🏆 AI MONAD CUP 🚀
 
-## Getting Started
+![AI Monad Cup Banner](docs/images/main_terminal.png)
 
-First, run the development server:
+> **"Geleceğin futbolu, Monad'ın hızı ve Yapay Zekanın zekasıyla buluşuyor."**
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+AI Monad Cup, **Monad Testnet** üzerinde çalışan, tamamen yapay zeka tarafından yönetilen ve simüle edilen devrimsel bir Dünya Kupası platformudur. Sadece bir simülasyon değil; on-chain şeffaflığı, Web3 bahis mekanikleri ve GPT destekli canlı anlatımıyla tam kapsamlı bir futbol ekosistemidir.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## ✨ Öne Çıkan Özellikler
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 🧠 Yapay Zeka Simülasyon Motoru (AI Engine)
+Her maç, her pas ve her şut AI tarafından takımların istatistiklerine ve o anki form durumlarına göre hesaplanır. Hiçbir maç birbirinin aynısı değildir!
 
-## Learn More
+### ⛓️ Monad Testnet Gücü
+Tüm kritik maç olayları (goller, kartlar, penaltılar) Monad blokzinciri üzerinde on-chain olarak kaydedilir. **24,000+ TPS** hızıyla saniyelik veri işleme ve tam şeffaflık sağlanır.
 
-To learn more about Next.js, take a look at the following resources:
+### 🎲 Web3 Bahis Arenası
+Kendi stratejinizi belirleyin! MetaMask ile bağlanın, MON bakiyenizi görün ve favori takımlarınıza bahis yapın. Kazançlar doğrudan cüzdanınıza!
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 🎙️ Dinamik GPT Anlatımı
+Maçları sadece skor tabelasından takip etmeyin. GPT destekli canlı anlatım sistemi, her olayı saha kenarındaki bir spiker gibi size aktarır.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## 🛠️ Teknoloji Yığını
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Frontend:** [Next.js 15](https://nextjs.org/) (App Router), React, Lucide Icons
+- **Blockchain:** [Monad Testnet](https://monad.xyz/) (Chain ID: 10143)
+- **Web3 Entegrasyonu:** Ethers.js, MetaMask API
+- **Veritabanı:** Supabase (PostgreSQL)
+- **Yapay Zeka:** OpenAI GPT-4o-mini (Match Engine & Commentary)
+- **Styling:** Premium Glassmorphism & Neon Design (Custom CSS)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## 🚀 Hızlı Başlangıç
+
+### Gereksinimler
+- Node.js v18.0 veya üzeri
+- MetaMask Tarayıcı Eklentisi
+- Monad Testnet MON Token (Faucet üzerinden alabilirsiniz)
+
+### Kurulum
+
+1. **Repo'yu Klonlayın:**
+   ```bash
+   git clone https://github.com/EnsarEness/Monad-Cup.git
+   cd Monad-Cup
+   ```
+
+2. **Bağımlılıkları Yükleyin:**
+   ```bash
+   npm install
+   ```
+
+3. **Çevre Değişkenlerini Ayarlayın (`.env.local`):**
+   ```env
+   NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_key
+   NEXT_PUBLIC_RPC_URL=https://testnet-rpc.monad.xyz
+   ```
+
+4. **Projeyi Çalıştırın:**
+   ```bash
+   npm run dev -- -p 3002
+   ```
+
+---
+
+## 📸 Ekran Görüntüleri
+
+### ⚽ Terminal ve Canlı Simülasyon
+![Terminal](docs/images/main_terminal.png)
+
+### 🎰 Bahis Arenası
+![Betting](docs/images/betting_arena.png)
+
+---
+
+## 🤝 Katkıda Bulunma
+Bu proje açık kaynaklıdır ve topluluk katkılarına açıktır. Bir özellik eklemek veya hata bildirmek için lütfen bir Issue oluşturun veya Pull Request gönderin.
+
+---
+
+## 📄 Lisans
+Bu proje **MIT** lisansı altında lisanslanmıştır.
+
+---
+**DEVELOPED BY TEAM AI MONAD CUP** 🦾
