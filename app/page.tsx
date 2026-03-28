@@ -29,6 +29,17 @@ export default async function Dashboard({ searchParams }: { searchParams: Promis
         query = query.limit(48); // Show more matches (e.g., 48 = 24 matches * 2 teams or just a lot of games)
     }
 
+    const { count: groupMatchCount } = await supabase
+        .from('matches')
+        .select('*', { count: 'exact', head: true })
+        .eq('stage', 'group')
+        .eq('status', 'COMPLETED');
+
+    const { count: knockoutMatchCount } = await supabase
+        .from('matches')
+        .select('*', { count: 'exact', head: true })
+        .neq('stage', 'group');
+
     const { data: matches } = await query;
 
     return (
@@ -36,7 +47,11 @@ export default async function Dashboard({ searchParams }: { searchParams: Promis
             <header className={styles.header}>
                 <h2 className={styles.title}>LIVE TERMINAL / <span className="neon-text-purple">RECENT MATCHES</span></h2>
                 <div className={styles.actions}>
-                    <SimulationButton groups={groups || []} />
+                    <SimulationButton
+                        groups={groups || []}
+                        groupMatchCount={groupMatchCount || 0}
+                        knockoutMatchCount={knockoutMatchCount || 0}
+                    />
                 </div>
             </header>
 

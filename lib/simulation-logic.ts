@@ -60,7 +60,7 @@ export async function processGroupMatchDay(groupId: string, delayMs: number = 20
     }
 
     async function processMatch(teamA: TeamStats, teamB: TeamStats) {
-        const { scoreA, scoreB, events } = simulateMatch(teamA, teamB);
+        const { scoreA, scoreB, events } = await simulateMatch(teamA, teamB);
         let liveScoreA = 0;
         let liveScoreB = 0;
 

@@ -2,8 +2,10 @@ import React, { ReactNode } from 'react';
 import Link from 'next/link';
 import { Activity, Trophy, Network, LayoutDashboard, Search } from 'lucide-react';
 import styles from './Layout.module.css';
+import { Web3Provider, useWeb3 } from '@/lib/context/Web3Context';
+import Web3ConnectionModal from './Web3ConnectionModal';
 
-export default function AppLayout({ children }: { children: ReactNode }) {
+function AppLayoutContent({ children }: { children: ReactNode }) {
     return (
         <div className={styles.container}>
             {/* Sidebar */}
@@ -32,6 +34,10 @@ export default function AppLayout({ children }: { children: ReactNode }) {
                         <Search size={20} />
                         <span>Block Explorer</span>
                     </Link>
+                    <Link href="/betting" className={styles.navLink}>
+                        <Trophy size={20} />
+                        <span>Betting Arena</span>
+                    </Link>
                 </nav>
 
                 <div className={styles.systemStatus}>
@@ -44,9 +50,13 @@ export default function AppLayout({ children }: { children: ReactNode }) {
             <main className={styles.mainContent}>
                 <header className={`${styles.header} glass-panel`}>
                     <h2 className={styles.headerTitle}>MATCH SIMULATION ENGINE v2.0</h2>
-                    <div className={styles.networkInfo}>
-                        <span>Network: testnet-1</span>
-                        <span className={styles.tps}>24,501 TPS</span>
+                    
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                        <div className={styles.networkInfo}>
+                            <span>Network: testnet-1</span>
+                            <span className={styles.tps}>24,501 TPS</span>
+                        </div>
+                        <Web3ConnectionModal />
                     </div>
                 </header>
 
@@ -55,5 +65,13 @@ export default function AppLayout({ children }: { children: ReactNode }) {
                 </div>
             </main>
         </div>
+    );
+}
+
+export default function AppLayout({ children }: { children: ReactNode }) {
+    return (
+        <Web3Provider>
+            <AppLayoutContent>{children}</AppLayoutContent>
+        </Web3Provider>
     );
 }

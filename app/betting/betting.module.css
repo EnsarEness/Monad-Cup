@@ -1,0 +1,371 @@
+.page {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.title {
+    font-size: 2rem;
+    font-weight: 900;
+    letter-spacing: 0.15em;
+    color: #fff;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+}
+
+.accent {
+    color: #8a2be2;
+    text-shadow: 0 0 20px #8a2be2;
+}
+
+.loading {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 4rem;
+    justify-content: center;
+    color: #aaa;
+    font-size: 1.1rem;
+}
+
+.spinner {
+    width: 32px;
+    height: 32px;
+    border: 3px solid #333;
+    border-top-color: #8a2be2;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.connectBanner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(138, 43, 226, 0.1);
+    border: 1px solid rgba(138, 43, 226, 0.3);
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    margin-bottom: 1.5rem;
+    color: #ccc;
+    font-size: 0.95rem;
+}
+
+.connectBtn {
+    background: #8a2be2;
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.2s;
+}
+
+.connectBtn:hover {
+    background: #6a1db0;
+}
+
+.errorBanner {
+    background: rgba(231, 76, 60, 0.15);
+    border: 1px solid rgba(231, 76, 60, 0.4);
+    border-radius: 10px;
+    padding: 0.75rem 1.25rem;
+    color: #ff6b6b;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+}
+
+.filterBar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.filterBtn {
+    padding: 6px 14px;
+    border-radius: 8px;
+    border: 1px solid #333;
+    background: rgba(255, 255, 255, 0.04);
+    color: #aaa;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: all 0.15s;
+}
+
+.filterBtn:hover {
+    border-color: #8a2be2;
+    color: #fff;
+}
+
+.filterActive {
+    background: rgba(138, 43, 226, 0.25);
+    border-color: #8a2be2;
+    color: #fff;
+    font-weight: bold;
+}
+
+.matchesGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 1rem;
+    margin-bottom: 3rem;
+}
+
+.empty {
+    grid-column: 1 / -1;
+    text-align: center;
+    color: #555;
+    padding: 3rem;
+    font-size: 1rem;
+}
+
+.matchCard {
+    background: rgba(20, 20, 35, 0.85);
+    border: 1px solid #2a2a3a;
+    border-radius: 16px;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    transition: border-color 0.2s, transform 0.2s;
+}
+
+.matchCard:hover {
+    border-color: #8a2be2;
+    transform: translateY(-2px);
+}
+
+.finished {
+    opacity: 0.7;
+}
+
+.groupBadge {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #8a2be2;
+    background: rgba(138, 43, 226, 0.1);
+    padding: 3px 10px;
+    border-radius: 20px;
+    align-self: flex-start;
+}
+
+.teamsRow {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.teamBtn {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 12px 8px;
+    border-radius: 12px;
+    border: 2px solid transparent;
+    background: rgba(255, 255, 255, 0.03);
+    cursor: pointer;
+    transition: all 0.15s;
+    color: #fff;
+}
+
+.teamBtn:hover:not(:disabled) {
+    border-color: #8a2be2;
+    background: rgba(138, 43, 226, 0.1);
+}
+
+.teamSelected {
+    border-color: #8a2be2 !important;
+    background: rgba(138, 43, 226, 0.2) !important;
+    box-shadow: 0 0 12px rgba(138, 43, 226, 0.3);
+}
+
+.teamBtn:disabled {
+    cursor: default;
+}
+
+.flagContainer {
+    width: 48px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.05);
+    position: relative;
+}
+
+.flagImg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: relative;
+    z-index: 2;
+}
+
+.flagEmoji {
+    font-size: 1.5rem;
+    position: absolute;
+    z-index: 1;
+}
+
+.teamName {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-align: center;
+    color: #ddd;
+}
+
+.scoreBox {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 60px;
+}
+
+.score {
+    font-size: 1.3rem;
+    font-weight: 900;
+    color: #fff;
+    font-family: monospace;
+}
+
+.vs {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #555;
+}
+
+.betForm {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.amountInput {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid #333;
+    border-radius: 8px;
+    padding: 8px 12px;
+    color: #fff;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.15s;
+}
+
+.amountInput:focus {
+    border-color: #8a2be2;
+}
+
+.amountInput::placeholder {
+    color: #555;
+}
+
+.betBtn {
+    background: linear-gradient(135deg, #8a2be2, #6a1db0);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 0.85rem;
+    white-space: nowrap;
+    transition: opacity 0.15s, transform 0.15s;
+}
+
+.betBtn:hover:not(:disabled) {
+    opacity: 0.85;
+    transform: scale(1.02);
+}
+
+.betBtn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.myBet {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.85rem;
+    color: #7dce82;
+    background: rgba(125, 206, 130, 0.08);
+    border: 1px solid rgba(125, 206, 130, 0.2);
+    border-radius: 8px;
+    padding: 8px 12px;
+}
+
+.txLink {
+    color: #4a90e2;
+    font-size: 0.8rem;
+    text-decoration: none;
+    margin-left: auto;
+}
+
+.txLink:hover {
+    text-decoration: underline;
+}
+
+.finishedBadge {
+    text-align: center;
+    font-size: 0.8rem;
+    color: #666;
+    font-style: italic;
+}
+
+.myBetsSection {
+    margin-top: 1rem;
+}
+
+.sectionTitle {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 1rem;
+}
+
+.betsList {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.betRow {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: rgba(20, 20, 35, 0.8);
+    border: 1px solid #2a2a3a;
+    border-radius: 10px;
+    padding: 0.75rem 1.25rem;
+    font-size: 0.9rem;
+}
+
+.betMatch {
+    color: #aaa;
+    flex: 1;
+}
+
+.betTeam {
+    color: #fff;
+    font-weight: 600;
+}
+
+.betAmount {
+    color: #a78bfa;
+    font-weight: 700;
+    font-family: monospace;
+}

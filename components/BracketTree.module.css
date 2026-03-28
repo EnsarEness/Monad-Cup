@@ -1,89 +1,191 @@
 .container {
-    overflow-x: auto;
-    padding: 24px;
-    background: rgba(10, 10, 10, 0.4);
-    border-radius: 12px;
+    padding: 40px;
+    background: radial-gradient(circle at center, rgba(131, 110, 251, 0.1) 0%, rgba(10, 10, 10, 0.6) 100%);
+    border-radius: 16px;
     border: 1px solid var(--glass-border);
-}
-
-.bracket {
-    display: flex;
-    gap: 48px;
-    min-width: max-content;
-}
-
-.column {
+    margin: 20px 0;
+    min-width: 1600px;
+    min-height: 1100px;
     display: flex;
     flex-direction: column;
-    gap: 16px;
-    width: 200px;
+    align-items: center;
 }
 
-.roundTitle {
+.tournamentHeader {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.bracketTitle {
+    font-size: 2.5rem;
+    font-weight: 900;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: white;
+    text-shadow: 0 0 20px rgba(131, 110, 251, 0.5);
+}
+
+.bracketWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    gap: 40px;
+    width: 100%;
+    height: 900px;
+    /* Fixed height for children to align correctly */
+}
+
+.bracketSide {
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+    flex: 1;
+}
+
+.mirrored {
+    flex-direction: row-reverse;
+}
+
+.roundColumn {
+    display: flex;
+    flex-direction: column;
+    width: 180px;
+    height: 100%;
+}
+
+.roundLabel {
     font-family: var(--font-mono);
     color: var(--monad-purple);
     text-align: center;
-    margin-bottom: 16px;
-    letter-spacing: 2px;
-    border-bottom: 1px solid rgba(131, 110, 251, 0.3);
-    padding-bottom: 8px;
+    margin-bottom: 20px;
+    font-size: 0.8rem;
+    padding: 8px;
+    background: rgba(131, 110, 251, 0.1);
+    border-radius: 4px;
+    text-transform: uppercase;
 }
 
-.matchList {
+.matches {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    flex: 1;
-    gap: 16px;
+    height: 100%;
 }
 
 .matchBox {
-    display: flex;
-    flex-direction: column;
-    background: rgba(0, 0, 0, 0.6);
-    padding: 8px 12px;
-    font-size: 0.85rem;
+    background: rgba(0, 0, 0, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 12px;
+    border-radius: 8px;
     position: relative;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Connectors */
-.matchBox::after {
-    content: '';
-    position: absolute;
-    right: -24px;
-    top: 50%;
-    width: 24px;
-    height: 2px;
-    background: rgba(131, 110, 251, 0.3);
-}
-
-.column:last-child .matchBox::after {
-    display: none;
+.matchBox:hover {
+    transform: scale(1.05);
+    border-color: var(--monad-purple);
+    box-shadow: 0 0 20px rgba(131, 110, 251, 0.3);
 }
 
 .teamRow {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 4px 0;
+    margin: 4px 0;
 }
 
 .teamName {
     font-weight: 600;
+    font-size: 0.85rem;
+    color: #eee;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 130px;
+    max-width: 110px;
 }
 
 .score {
     font-family: var(--font-mono);
-    font-weight: 700;
+    font-weight: 800;
     color: var(--neon-green);
+    font-size: 0.9rem;
 }
 
 .divider {
     height: 1px;
     background: rgba(255, 255, 255, 0.1);
-    margin: 2px 0;
+    margin: 6px 0;
 }
+
+/* Finals Center Styling */
+.finalsCenter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 300px;
+    height: 100%;
+}
+
+.finalMatchContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.finalLabel {
+    font-size: 1.5rem;
+    color: #FFD700;
+    font-weight: 900;
+    letter-spacing: 10px;
+    text-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+}
+
+.trophyWrapper {
+    font-size: 5rem;
+    filter: drop-shadow(0 0 30px rgba(255, 215, 0, 0.6));
+    animation: trophyFloat 3s ease-in-out infinite;
+}
+
+@keyframes trophyFloat {
+
+    0%,
+    100% {
+        transform: translateY(0) rotate(0deg);
+    }
+
+    50% {
+        transform: translateY(-20px) rotate(5deg);
+    }
+}
+
+.emptyMatch {
+    opacity: 0.5;
+    font-family: var(--font-mono);
+    font-style: italic;
+    text-align: center;
+    padding: 20px;
+}
+
+/* Connectors Logic */
+.roundColumn:not(:last-child) .matchBox::after {
+    content: "";
+    position: absolute;
+    right: -40px;
+    top: 50%;
+    width: 40px;
+    height: 2px;
+    background: rgba(131, 110, 251, 0.3);
+    z-index: -1;
+}
+
+/* Right side mirrored connecters */
+.mirrored .roundColumn:not(:last-child) .matchBox::after {
+    left: -40px;
+    right: auto;
+    background: rgba(0, 240, 255, 0.3);
+}
+
+/* Vertical bracket lines would require more complex SVG or CSS, 
+   but for now, the horizontal logic + space-around is much cleaner than before. */

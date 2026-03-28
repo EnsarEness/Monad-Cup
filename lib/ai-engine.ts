@@ -1,3 +1,10 @@
+import { generateMatchGoals, generateMatchSummary } from './gpt-commentary';
+
+// Team strength calculation (replaces getTeamStrength from player-database)
+function getTeamStrength(attack: number, defense: number, midfield: number): number {
+    return attack * 0.5 + defense * 0.3 + midfield * 0.2;
+}
+
 export interface TeamStats {
     id: string;
     name: string;
@@ -10,130 +17,156 @@ export interface TeamStats {
 export interface MatchEventData {
     minute: number;
     text: string;
-    type: 'goal' | 'yellow_card' | 'red_card' | 'var_check' | 'injury' | 'save' | 'miss' | 'substitution' | 'kickoff' | 'halftime' | 'fulltime';
+    type: 'goal' | 'yellow_card' | 'red_card' | 'var_check' | 'injury' | 'save' | 'miss' | 'substitution' | 'kickoff' | 'halftime' | 'fulltime' | 'penalty_shootout';
     teamId?: string; // Which team this event belongs to (for goals)
+    playerName?: string; // Player who scored
+    goalType?: string; // Type of goal
+    assist?: string; // Player who assisted
 }
 
 export interface MatchResult {
     scoreA: number;
     scoreB: number;
+    penaltyScoreA?: number;
+    penaltyScoreB?: number;
     events: MatchEventData[];
 }
 
-const EVENT_TEMPLATES = {
-    goal: [
-        "⚽ GOOOL! {team} ağları buluyor! (hızlı kontra atak)",
-        "⚽ GOOOL! {team} uzak mesafeden muhteşem bir vuruş!",
-        "⚽ GOOOL! {team} köşe vuruşundan skoru değiştiriyor!",
-        "⚽ GOOOL! {team} penaltıyı gole çeviriyor!",
-        "⚽ GOOOL! Savunma hatasından sonra {team} için kolay gol!",
-        "⚽ GOOOL! {team} kafa vuruşuyla gol buluyor!"
-    ],
-    yellow_card: [
-        "🟨 Sarı kart! {team} oyuncusu sert müdahale sonrası uyarıldı.",
-        "🟨 Sarı kart! {team} oyuncusu hakemle tartışmaktan cezalandırıldı.",
-        "🟨 Sarı kart! {team} taktiksel faulden kart gördü.",
-        "🟨 Sarı kart! {team} oyuncusu zaman kaybettiği için uyarıldı."
-    ],
-    red_card: [
-        "🟥 KIRMIZI KART! {team} tehlikeli müdahale sonrası 10 kişi kaldı!",
-        "🟥 KIRMIZI KART! İkinci sarıdan kırmızı! {team} oyuncusu sahayı terk ediyor!",
-        "🟥 KIRMIZI KART! {team} oyuncusu dirsek atarak ihraç edildi!"
-    ],
-    var_check: [
-        "📺 VAR İNCELEMESİ! Hakem monitöre gidiyor... {team} pozisyonu inceleniyor.",
-        "📺 VAR! Ofsayt kontrolü yapılıyor... {team} golü geçerli mi?",
-        "📺 VAR İNCELEMESİ! Penaltı pozisyonu kontrol ediliyor, {team} ceza sahasında müdahale.",
-        "📺 VAR KARARI: Pozisyon incelendi, oyun devam ediyor."
-    ],
-    injury: [
-        "🚑 Oyun durdu! {team} oyuncusu yerde kaldı, sağlık ekibi sahada.",
-        "🚑 Zorunlu değişiklik! {team} oyuncusu sakatlık nedeniyle oyundan çıkıyor."
-    ],
-    save: [
-        "🧤 Harika kurtarış! {team} kalecisi müthiş refleksle topu çıkardı!",
-        "🧤 İnanılmaz! {team} kalecisi topu üst direğe çeldi!",
-        "🧤 Muhteşem kurtarış! {team} kalecisi takımını kurtardı!"
-    ],
-    miss: [
-        "❌ Kaçan gol! {team} boş kaleye vuramadı!",
-        "❌ Inanılmaz! {team} topu tribünlere gönderdi!",
-        "❌ Direkte kaldı! {team} ne kadar şanssız!"
-    ],
-    substitution: [
-        "🔄 Değişiklik! {team} taze kan getiriyor oyuna.",
-        "🔄 Taktiksel hamle! {team} teknik direktörü değişikliğe gidiyor.",
-        "🔄 Değişiklik! {team} hücum hattını güçlendiriyor."
-    ]
-};
+export async function simulateMatch(teamA: TeamStats, teamB: TeamStats): Promise<MatchResult> {
+    // Calculate realistic team strengths
+    const strengthA = getTeamStrength(teamA.attack, teamA.defense, teamA.midfield);
+    const strengthB = getTeamStrength(teamB.attack, teamB.defense, teamB.midfield);
+    const totalStrength = strengthA + strengthB || 1;
 
-function getRandomItem(arr: string[], teamName: string) {
-    const item = arr[Math.floor(Math.random() * arr.length)];
-    return item.replace("{team}", teamName);
-}
+    // Poisson distribution for goals (more realistic than random binary)
+    const probA = strengthA / totalStrength;
+    const probB = strengthB / totalStrength;
 
-export function simulateMatch(teamA: TeamStats, teamB: TeamStats): MatchResult {
-    const strengthA = teamA.attack * 0.4 + teamA.midfield * 0.4 + teamA.defense * 0.2;
-    const strengthB = teamB.attack * 0.4 + teamB.midfield * 0.4 + teamB.defense * 0.2;
-    const totalStrength = strengthA + strengthB || 100;
-
-    const lambdaA = (strengthA / totalStrength) * 3;
-    const lambdaB = (strengthB / totalStrength) * 3;
+    // Average goals per team based on strength
+    const expectedGoalsA = probA * 2.5;  // Average 2.5 goals total distributed by strength
+    const expectedGoalsB = probB * 2.5;
 
     let scoreA = 0;
     let scoreB = 0;
+
+    // Simulate goals using Poisson-like logic
     for (let i = 0; i < 5; i++) {
-        if (Math.random() < lambdaA * 0.25) scoreA++;
-        if (Math.random() < lambdaB * 0.25) scoreB++;
+        if (Math.random() < expectedGoalsA * 0.25) scoreA++;
+        if (Math.random() < expectedGoalsB * 0.25) scoreB++;
     }
+
+    // Cap scores at realistic values
+    scoreA = Math.min(scoreA, 6);
+    scoreB = Math.min(scoreB, 6);
+
+    // Generate realistic goal descriptions using GPT
+    let goals = await generateMatchGoals(teamA.name, teamB.name, scoreA, scoreB);
+    let matchSummary = await generateMatchSummary(teamA.name, teamB.name, scoreA, scoreB, goals);
 
     const events: MatchEventData[] = [];
 
     // 1' - Kickoff
-    events.push({ minute: 1, text: "🏟️ Maç başladı! İlk düdük çaldı!", type: 'kickoff' });
+    events.push({
+        minute: 1,
+        text: "🏟️ Maç başladı! İlk düdük çaldı!",
+        type: 'kickoff'
+    });
 
-    // Goal events - scattered across the match
-    for (let i = 0; i < scoreA; i++) {
-        const minute = Math.floor(Math.random() * 88) + 2;
-        events.push({ minute, text: getRandomItem(EVENT_TEMPLATES.goal, teamA.name), type: 'goal', teamId: teamA.id });
-    }
-    for (let i = 0; i < scoreB; i++) {
-        const minute = Math.floor(Math.random() * 88) + 2;
-        events.push({ minute, text: getRandomItem(EVENT_TEMPLATES.goal, teamB.name), type: 'goal', teamId: teamB.id });
+    // Goal events - using GPT-generated realistic descriptions
+    for (const goal of goals) {
+        const teamId = goal.teamName === teamA.name ? teamA.id : teamB.id;
+        events.push({
+            minute: goal.minute,
+            text: goal.description,
+            type: 'goal',
+            teamId: teamId,
+            playerName: goal.scorer,
+            goalType: goal.goalType,
+            assist: goal.assist
+        });
     }
 
-    // Random other events (6-10 total non-goal events for realism)
-    const nonGoalCount = Math.floor(Math.random() * 5) + 6;
-    const eventTypes: (keyof typeof EVENT_TEMPLATES)[] = ['yellow_card', 'red_card', 'var_check', 'injury', 'save', 'miss', 'substitution'];
-    const eventWeights = [25, 3, 12, 8, 20, 15, 17]; // probability weights
+    // Random other events
+    const nonGoalCount = Math.floor(Math.random() * 4) + 3;
+    const eventTemplates = [
+        `🟨 Sarı kart! {team} oyuncusu sert müdahale sonrası uyarıldı.`,
+        `🧤 Harika kurtarış! {team} kalecisi müthiş refleksle topu çıkardı!`,
+        `❌ Kaçan gol! {team} boş kaleye vuramadı!`,
+        `🔄 Değişiklik! {team} taze kan getiriyor oyuna.`,
+    ];
 
     for (let i = 0; i < nonGoalCount; i++) {
-        // Weighted random selection
-        const totalWeight = eventWeights.reduce((a, b) => a + b, 0);
-        let rng = Math.random() * totalWeight;
-        let typeIdx = 0;
-        for (let w = 0; w < eventWeights.length; w++) {
-            rng -= eventWeights[w];
-            if (rng <= 0) { typeIdx = w; break; }
-        }
-        const type = eventTypes[typeIdx];
         const team = Math.random() > 0.5 ? teamA : teamB;
         const minute = Math.floor(Math.random() * 88) + 2;
-        events.push({ minute, text: getRandomItem(EVENT_TEMPLATES[type], team.name), type, teamId: team.id });
+        const template = eventTemplates[Math.floor(Math.random() * eventTemplates.length)];
+        const text = template.replace('{team}', team.name);
+
+        events.push({
+            minute,
+            text,
+            type: 'yellow_card',
+            teamId: team.id
+        });
     }
 
     // 45' - Halftime
-    events.push({ minute: 45, text: "⏸️ İlk yarı sona erdi! Takımlar soyunma odasına gidiyor.", type: 'halftime' });
+    events.push({
+        minute: 45,
+        text: "⏸️ İlk yarı sona erdi! Takımlar soyunma odasına gidiyor.",
+        type: 'halftime'
+    });
 
     // Sort all events by minute
     events.sort((a, b) => a.minute - b.minute);
 
-    // 90' - Full time (add at end)
-    events.push({ minute: 90, text: "🏁 Maç sona erdi! Final düdüğü çaldı!", type: 'fulltime' });
+    // 90' - Full time
+    events.push({
+        minute: 90,
+        text: "🏁 Maç sona erdi! Final düdüğü çaldı!",
+        type: 'fulltime'
+    });
 
-    return {
-        scoreA,
-        scoreB,
-        events
-    };
+    return { scoreA, scoreB, events };
+}
+
+export async function simulateKnockoutMatch(teamA: TeamStats, teamB: TeamStats): Promise<MatchResult> {
+    const result = await simulateMatch(teamA, teamB);
+
+    if (result.scoreA === result.scoreB) {
+        // Penalty shootout
+        result.events.push({ minute: 120, text: "⚖️ Beraberlik bozulmadı, seri penaltı atışlarına geçiliyor!", type: 'penalty_shootout' });
+
+        let pA = 0;
+        let pB = 0;
+        let rounds = 0;
+
+        // Perform at least 5 rounds
+        while (rounds < 5 || pA === pB) {
+            rounds++;
+            // Team A takes penalty
+            if (Math.random() > 0.3) {
+                pA++;
+                result.events.push({ minute: 120 + rounds, text: `🎯 GOOOL! ${teamA.name} penaltıyı gole çevirdi! (${pA}-${pB})`, type: 'penalty_shootout', teamId: teamA.id });
+            } else {
+                result.events.push({ minute: 120 + rounds, text: `🎯 KAÇTI! ${teamA.name} penaltı vuruşundan yararlanamadı!`, type: 'penalty_shootout', teamId: teamA.id });
+            }
+
+            // Team B takes penalty
+            if (Math.random() > 0.3) {
+                pB++;
+                result.events.push({ minute: 120 + rounds, text: `🎯 GOOOL! ${teamB.name} penaltıyı gole çevirdi! (${pA}-${pB})`, type: 'penalty_shootout', teamId: teamB.id });
+            } else {
+                result.events.push({ minute: 120 + rounds, text: `🎯 KAÇTI! ${teamB.name} penaltı vuruşundan yararlanamadı!`, type: 'penalty_shootout', teamId: teamB.id });
+            }
+
+            // Sudden death check after 5 rounds
+            if (rounds >= 5 && pA !== pB) break;
+        }
+
+        result.penaltyScoreA = pA;
+        result.penaltyScoreB = pB;
+        result.events.push({ minute: 130, text: `🏁 Seri penaltı atışları sona erdi! Kazanan: ${pA > pB ? teamA.name : teamB.name}`, type: 'penalty_shootout' });
+    }
+
+    return result;
 }

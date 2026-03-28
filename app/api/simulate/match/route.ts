@@ -25,7 +25,7 @@ export async function POST(req: Request) {
         const teamB = teams.find(t => t.id === teamBId) as TeamStats;
 
         // 2. Simulate Match
-        const { scoreA, scoreB, events } = simulateMatch(teamA, teamB);
+        const { scoreA, scoreB, events } = await simulateMatch(teamA, teamB);
 
         // 3. Save Match
         const { data: match, error: matchError } = await supabase
